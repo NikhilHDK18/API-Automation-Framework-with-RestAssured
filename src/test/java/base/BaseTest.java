@@ -7,10 +7,12 @@ import java.util.ResourceBundle;
 
 public class BaseTest {
 
+    protected static ResourceBundle config;
+
     @BeforeClass
     public void setup(){
-        ResourceBundle  config = ResourceBundle.getBundle("config");
+        config = ResourceBundle.getBundle("config");
         RestAssured.baseURI =config.getString("base.url");
-        RestAssured.baseURI =config.getString("base.url");
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }
 }
