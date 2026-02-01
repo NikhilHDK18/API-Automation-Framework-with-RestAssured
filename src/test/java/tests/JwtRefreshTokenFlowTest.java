@@ -13,18 +13,13 @@ import java.util.Map;
 
 public class JwtRefreshTokenFlowTest extends BaseTest {
 
-    private static String accessToken;
-    private static String refreshToken;
-    private static Map<String, String> cookies;
-
     @BeforeMethod
     public void init() {
         useDummyJsonApi();
     }
 
-
     @Test(priority = 1)
-    public void loginAndCaptureToken(){
+    public void loginAndCaptureToken() {
 
         Response response = JwtAuthEndpoints.login(
                 JwtTestData.validLoginRequest()
@@ -32,18 +27,23 @@ public class JwtRefreshTokenFlowTest extends BaseTest {
 
         Assert.assertEquals(response.getStatusCode(), 200);
 
-        accessToken = response.jsonPath().getString("accessToken");
-        refreshToken = response.jsonPath().getString("refreshToken");
-        cookies = response.getCookies();
-
-        System.out.println(accessToken);
-        System.out.println(refreshToken);
+        AuthContext.setAccessToken(
+                response.jsonPath().getString("accessToken")
+        );
+        AuthContext.setRefreshToken(
+                response.jsonPath().getString("refreshToken")
+        );
+        AuthContext.setCookies(response.getCookies());
     }
 
     @Test(priority = 2)
-    public void accessApiWithValidAccessToken(){
+    public void accessApiWithValidAccessToken() {
 
-        Response response = JwtAuthEndpoints.getUserProfile(accessToken, cookies);
+        Response response =
+                JwtAuthEndpoints.getUserProfile(
+                        AuthContext.getAccessToken(),
+                        AuthContext.getCookies()
+                );
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -65,15 +65,19 @@ public class JwtRefreshTokenFlowTest extends BaseTest {
         AuthContext.setRefreshToken(
                 response.jsonPath().getString("refreshToken")
         );
+        AuthContext.setCookies(response.getCookies());
 
         Assert.assertNotNull(AuthContext.getAccessToken());
     }
 
-
     @Test(priority = 4)
-    public void accessApiWithNewAccessToken(){
+    public void accessApiWithNewAccessToken() {
 
-        Response response = JwtAuthEndpoints.getUserProfile(accessToken, cookies);
+        Response response =
+                JwtAuthEndpoints.getUserProfile(
+                        AuthContext.getAccessToken(),
+                        AuthContext.getCookies()
+                );
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }

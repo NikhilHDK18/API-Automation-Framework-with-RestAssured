@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pojo.AuthResponse;
 import reporting.ExtentTestListener;
+import reporting.ReportLogger;
 import utils.JwtTestData;
 import java.util.Map;
 
@@ -24,7 +25,8 @@ public class JwtAuthPojoFlowTest extends BaseTest {
     @Test(priority = 1)
     public void loginWithPojo() {
 
-        ExtentTestListener.getTest().info("Logging in to get access and refresh tokens");
+
+        ReportLogger.info("Logging in to get access and refresh tokens");
 
         Response response =
                 JwtAuthEndpoints.login(JwtTestData.validLoginRequest());
@@ -37,14 +39,15 @@ public class JwtAuthPojoFlowTest extends BaseTest {
         AuthContext.setRefreshToken(auth.getRefreshToken());
         AuthContext.setCookies(response.getCookies());
 
-        ExtentTestListener.getTest().info("Access token stored in AuthContext");
+        ReportLogger.info("Access token stored in AuthContext");
+
     }
 
 
     @Test(priority = 2)
     public void accessSecureApiUsingAuthContext() {
 
-        ExtentTestListener.getTest().info("Calling secured API with JWT token");
+        ReportLogger.info("Calling secured API with JWT token");
 
         Response response =
                 JwtAuthEndpoints.getUserProfile(
@@ -54,7 +57,8 @@ public class JwtAuthPojoFlowTest extends BaseTest {
 
         Assert.assertEquals(response.getStatusCode(), 200);
 
-        ExtentTestListener.getTest().pass("Secured API accessed successfully");
+
+        ReportLogger.info("Secured API accessed successfully");
     }
 
 }

@@ -32,6 +32,11 @@ public class ExtentTestListener implements ITestListener {
     }
 
     public static ExtentTest getTest() {
+        if (test.get() == null) {
+            throw new IllegalStateException(
+                    "ExtentTest is null. Ensure ExtentTestListener is registered."
+            );
+        }
         return test.get();
     }
 }

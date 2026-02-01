@@ -6,9 +6,12 @@ import config.ApiConfig.ApiType;
 import io.restassured.RestAssured;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
+import reporting.ExtentTestListener;
 
 import java.util.ResourceBundle;
 
+@Listeners(ExtentTestListener.class)
 public class BaseTest {
 
     protected static ResourceBundle config;
@@ -32,4 +35,9 @@ public class BaseTest {
     public void tearDown() {
         AuthContext.clear();
     }
+
+
+
+
+
 }
