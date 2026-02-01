@@ -5,6 +5,7 @@ import context.AuthContext;
 import endpoints.JwtAuthEndpoints;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pojo.AuthResponse;
 import reporting.ExtentTestListener;
@@ -12,6 +13,12 @@ import utils.JwtTestData;
 import java.util.Map;
 
 public class JwtAuthPojoFlowTest extends BaseTest {
+
+
+    @BeforeMethod
+    public void init() {
+        useDummyJsonApi();
+    }
 
 
     @Test(priority = 1)

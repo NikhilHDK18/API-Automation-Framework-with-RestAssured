@@ -5,6 +5,7 @@ import context.AuthContext;
 import endpoints.JwtAuthEndpoints;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import utils.JwtTestData;
 
@@ -15,6 +16,12 @@ public class JwtRefreshTokenFlowTest extends BaseTest {
     private static String accessToken;
     private static String refreshToken;
     private static Map<String, String> cookies;
+
+    @BeforeMethod
+    public void init() {
+        useDummyJsonApi();
+    }
+
 
     @Test(priority = 1)
     public void loginAndCaptureToken(){

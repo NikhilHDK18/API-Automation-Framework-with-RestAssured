@@ -4,13 +4,20 @@ import base.BaseTest;
 import endpoints.UserInfo;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import utils.TestData;
 
 public class CreateUser extends BaseTest {
 
+    @BeforeMethod
+    public void init() {
+        usePetStoreApi();
+    }
+
+
     @Test
-    public void createNewUser(){
+    public void createNewUser() {
 
         Response response = UserInfo.createUser(
                 TestData.createUserPayload()
@@ -18,7 +25,7 @@ public class CreateUser extends BaseTest {
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertNotNull(response.jsonPath().getString("message"));
-
     }
+
 
 }
