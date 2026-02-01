@@ -1,4 +1,4 @@
-package tests.user;
+package tests;
 
 import base.BaseTest;
 import endpoints.UserInfo;

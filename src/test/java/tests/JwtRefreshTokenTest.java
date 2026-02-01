@@ -1,8 +1,8 @@
-package tests.auth;
+package tests;
 
 import base.BaseTest;
 import context.AuthContext;
-import endpoints.JwtAuthEndpoints;
+import endpoints.JwtAuthEndpoint;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -24,7 +24,7 @@ public class JwtRefreshTokenTest extends BaseTest {
 
         ReportLogger.info("Starting login to capture access & refresh tokens");
 
-        Response response = JwtAuthEndpoints.login(
+        Response response = JwtAuthEndpoint.login(
                 JwtTestData.validLoginRequest()
         );
 
@@ -57,7 +57,7 @@ public class JwtRefreshTokenTest extends BaseTest {
         ReportLogger.info("Accessing secured API using valid access token");
 
         Response response =
-                JwtAuthEndpoints.getUserProfile(
+                JwtAuthEndpoint.getUserProfile(
                         AuthContext.getAccessToken(),
                         AuthContext.getCookies()
                 );
@@ -76,7 +76,7 @@ public class JwtRefreshTokenTest extends BaseTest {
         ReportLogger.info("Refreshing access token using refresh token");
 
         Response response =
-                JwtAuthEndpoints.refreshToken(
+                JwtAuthEndpoint.refreshToken(
                         AuthContext.getRefreshToken(),
                         AuthContext.getCookies()
                 );
@@ -105,7 +105,7 @@ public class JwtRefreshTokenTest extends BaseTest {
         ReportLogger.info("Accessing secured API using refreshed access token");
 
         Response response =
-                JwtAuthEndpoints.getUserProfile(
+                JwtAuthEndpoint.getUserProfile(
                         AuthContext.getAccessToken(),
                         AuthContext.getCookies()
                 );

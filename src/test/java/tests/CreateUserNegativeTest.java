@@ -1,11 +1,10 @@
-package tests.user;
+package tests;
 
 import base.BaseTest;
 import endpoints.UserInfo;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import reporting.ReportLogger;

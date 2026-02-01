@@ -1,29 +1,18 @@
 package pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
+
 public class LoginRequest {
 
     private String username;
     private String password;
-    private int expiresInMins;
-
-    public LoginRequest(String username, String password, int expiresInMins){
-        this.username = username;
-        this.password = password;
-        this.expiresInMins = expiresInMins;
-
-    }
-
-    public String getUsername(){
-        return username;
-    }
-
-    public String getPassword(){
-        return password;
-    }
-
-    public int getExpiresInMins(){
-        return expiresInMins;
-    }
-
-
+    private Integer expiresInMins;
 }
