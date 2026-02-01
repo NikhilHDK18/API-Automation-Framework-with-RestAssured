@@ -11,7 +11,8 @@ import reporting.ExtentTestListener;
 
 import java.util.ResourceBundle;
 
-@Listeners(ExtentTestListener.class)
+
+@Listeners(reporting.ExtentTestListener.class)
 public class BaseTest {
 
     protected static ResourceBundle config;
