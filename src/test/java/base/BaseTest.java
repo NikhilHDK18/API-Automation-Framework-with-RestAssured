@@ -1,6 +1,7 @@
 package base;
 
 import context.AuthContext;
+import context.ResponseContext;
 import config.ApiConfig;
 import config.ApiConfig.ApiType;
 import io.restassured.RestAssured;
@@ -35,6 +36,7 @@ public class BaseTest {
     @AfterSuite
     public void tearDown() {
         AuthContext.clear();
+        ResponseContext.clear();
     }
 
 

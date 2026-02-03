@@ -2,6 +2,8 @@ package reporting;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import context.ResponseContext;
+import io.restassured.response.Response;
 import org.testng.*;
 
 public class ExtentTestListener implements ITestListener {
@@ -24,11 +26,27 @@ public class ExtentTestListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         test.get().fail(result.getThrowable());
+
+        Response lastResponse = ResponseContext.getLastResponse();
+        if (lastResponse != null) {
+            test.get().fail("Last response status: " + lastResponse.getStatusCode());
+            test.get().fail("Last response headers: " + lastResponse.getHeaders());
+            test.get().fail("Last response body:\n" + lastResponse.asString());
+        } else {
+            test.get().fail("No response captured for this test.");
+        }
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+        test.get().skip(result.getThrowable());
     }
 
     @Override
     public void onFinish(ITestContext context) {
         extent.flush();
+        ReportPostProcessor.addStatusBadges(
+                java.nio.file.Paths.get("target", "extent-report.html"));
     }
 
     public static ExtentTest getTest() {

@@ -1,5 +1,6 @@
 package endpoints;
 
+import context.ResponseContext;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -21,18 +22,22 @@ public class JwtAuthEndpoint {
        ------------------------- */
 
     public static Response login(Map<String, Object> payload) {
-        return given()
+        Response response = given()
                 .contentType(ContentType.JSON)
                 .body(payload)
                 .post(LOGIN);
+        ResponseContext.setLastResponse(response);
+        return response;
     }
 
     // POJO-based login
     public static Response login(LoginRequest payload) {
-        return given()
+        Response response = given()
                 .contentType(ContentType.JSON)
                 .body(payload)
                 .post(LOGIN);
+        ResponseContext.setLastResponse(response);
+        return response;
     }
 
     /* -------------------------
@@ -51,12 +56,14 @@ public class JwtAuthEndpoint {
             request.cookies(cookies);
         }
 
-        return request
+        Response response = request
                 .when()
                 .get(PROFILE)
                 .then()
                 .extract()
                 .response();
+        ResponseContext.setLastResponse(response);
+        return response;
     }
 
     /* -------------------------
@@ -65,13 +72,15 @@ public class JwtAuthEndpoint {
 
     public static Response getUserProfileWithTokenOnly(String accessToken) {
 
-        return given()
+        Response response = given()
                 .header("Authorization", "Bearer " + accessToken)
                 .when()
                 .get(PROFILE)
                 .then()
                 .extract()
                 .response();
+        ResponseContext.setLastResponse(response);
+        return response;
     }
 
     /* -------------------------
@@ -96,11 +105,13 @@ public class JwtAuthEndpoint {
             request.cookies(cookies);
         }
 
-        return request
+        Response response = request
                 .when()
                 .post(REFRESH)
                 .then()
                 .extract()
                 .response();
+        ResponseContext.setLastResponse(response);
+        return response;
     }
 }

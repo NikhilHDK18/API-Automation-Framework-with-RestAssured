@@ -3,11 +3,11 @@ package tests;
 import base.BaseTest;
 import endpoints.UserInfo;
 import io.restassured.response.Response;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import reporting.ReportLogger;
+import utils.AssertUtils;
 import utils.TestData;
 
 import java.util.HashMap;
@@ -37,9 +37,11 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Response:\n" + response.asPrettyString());
 
-        Assert.assertTrue(
-                response.getStatusCode() == 400 || response.getStatusCode() == 200,
-                "Petstore may allow missing username"
+        AssertUtils.assertStatusIn(
+                response,
+                "Create user without username",
+                200,
+                400
         );
     }
 
@@ -55,7 +57,11 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Response:\n" + response.asPrettyString());
 
-        Assert.assertTrue(response.getStatusCode() >= 200);
+        AssertUtils.assertStatusAtLeast(
+                response,
+                "Create user without email",
+                200
+        );
     }
 
     /* -------------------------
@@ -74,7 +80,11 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Response:\n" + response.asPrettyString());
 
-        Assert.assertTrue(response.getStatusCode() >= 200);
+        AssertUtils.assertStatusAtLeast(
+                response,
+                "Create user with invalid email format",
+                200
+        );
     }
 
     @Test
@@ -89,7 +99,11 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Response:\n" + response.asPrettyString());
 
-        Assert.assertTrue(response.getStatusCode() >= 200);
+        AssertUtils.assertStatusAtLeast(
+                response,
+                "Create user with invalid phone",
+                200
+        );
     }
 
     /* -------------------------
@@ -116,7 +130,11 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Response:\n" + response.asPrettyString());
 
-        Assert.assertTrue(response.getStatusCode() >= 200);
+        AssertUtils.assertStatusAtLeast(
+                response,
+                "Create user with very long username",
+                200
+        );
     }
 
     /* -------------------------
@@ -135,7 +153,11 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Second Response:\n" + secondResponse.asPrettyString());
 
-        Assert.assertTrue(secondResponse.getStatusCode() >= 200);
+        AssertUtils.assertStatusAtLeast(
+                secondResponse,
+                "Create duplicate user (second response)",
+                200
+        );
     }
 
     /* -------------------------
@@ -153,9 +175,11 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Response:\n" + response.asPrettyString());
 
-        Assert.assertTrue(
-                response.getStatusCode() == 400 || response.getStatusCode() == 200,
-                "Petstore accepts empty payload"
+        AssertUtils.assertStatusIn(
+                response,
+                "Create user with empty payload",
+                200,
+                400
         );
     }
 
@@ -172,7 +196,11 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Response:\n" + response.asPrettyString());
 
-        Assert.assertEquals(response.getStatusCode(), 405);
+        AssertUtils.assertStatusIn(
+                response,
+                "Create user using GET method",
+                405
+        );
     }
 
     /* -------------------------
@@ -191,8 +219,11 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Response:\n" + response.asPrettyString());
 
-        Assert.assertTrue(
-                response.getStatusCode() == 415 || response.getStatusCode() == 200
+        AssertUtils.assertStatusIn(
+                response,
+                "Create user without Content-Type",
+                200,
+                415
         );
     }
 }
