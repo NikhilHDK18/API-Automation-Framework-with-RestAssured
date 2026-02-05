@@ -8,10 +8,12 @@ A comprehensive API testing framework built with **RestAssured**, **TestNG**, an
 
 - **Multi-API Support**: Configurable framework supporting multiple APIs (PetStore & DummyJSON)
 - **JWT Authentication Flow**: Complete implementation of JWT authentication with access/refresh tokens
+- **Product API Testing**: Comprehensive product listing, filtering, and validation tests
 - **POJO-based Requests**: Type-safe API requests using Plain Old Java Objects
 - **Comprehensive Reporting**: HTML reports using ExtentReports with detailed test logs
-- **Context Management**: Centralized auth context for managing tokens and cookies across tests
+- **Context Management**: Centralized auth and response context for managing state across tests
 - **Positive & Negative Testing**: Extensive test coverage with both positive and negative scenarios
+- **Custom Assertions**: Reusable assertion utilities for cleaner test code
 - **CI/CD Ready**: GitHub Actions workflow for automated test execution
 - **Logging**: SLF4J with Logback for detailed test execution logs
 - **Data-Driven Testing**: Reusable test data utilities
@@ -37,44 +39,116 @@ A comprehensive API testing framework built with **RestAssured**, **TestNG**, an
 ## 📁 Project Structure
 
 ```
-simple-api-automation-restassured/
-├── src/test/java/
-│   ├── base/
-│   │   └── BaseTest.java              # Base test class with common setup
-│   ├── config/
-│   │   └── ApiConfig.java             # API configuration management
-│   ├── context/
-│   │   └── AuthContext.java           # Authentication context for tokens
-│   ├── api/
-│   │   ├── AuthApi.java               # Auth-related endpoints
-│   │   ├── JwtAuthApi.java            # JWT authentication endpoints
-│   │   └── UserApi.java               # User information endpoints
-│   ├── pojo/
-│   │   ├── AuthResponse.java          # Authentication response model
-│   │   ├── LoginRequest.java          # Login request model
-│   │   └── RefreshTokenRequest.java   # Refresh token request model
-│   ├── reporting/
-│   │   ├── ExtentManager.java         # ExtentReports configuration
-│   │   ├── ExtentTestListener.java    # TestNG listener for reporting
-│   │   └── ReportLogger.java          # Custom logger for reports
-│   ├── tests/
-│   │   ├── CreateUserPositiveTest.java
-│   │   ├── CreateUserNegativeTest.java
-│   │   ├── JwtAuthFlowTest.java
-│   │   ├── JwtAuthPositiveTest.java
-│   │   ├── JwtAuthNegativeTest.java
-│   │   └── JwtRefreshTokenTest.java
-│   └── utils/
-│       ├── TestData.java              # Test data for user operations
-│       └── JwtTestData.java           # Test data for JWT operations
-├── src/test/resources/
-│   ├── config.properties              # Configuration properties
-│   └── logback.xml                    # Logging configuration
-├── .github/workflows/
-│   └── api-tests.yml                  # GitHub Actions CI/CD workflow
-├── pom.xml                            # Maven dependencies
-└── testng.xml                         # TestNG suite configuration
+API-Automation-Framework-with-RestAssured-main/
+├── .github/
+│   └── workflows/
+│       └── api-tests.yml              # GitHub Actions CI/CD workflow
+│
+├── src/test/
+│   ├── java/
+│   │   ├── api/                       # API endpoint layer
+│   │   │   ├── AuthApi.java          # Auth-related endpoints
+│   │   │   ├── JwtAuthApi.java       # JWT authentication endpoints
+│   │   │   ├── ProductApi.java       # Product-related endpoints
+│   │   │   └── UserApi.java          # User information endpoints
+│   │   │
+│   │   ├── base/                      # Base test setup
+│   │   │   └── BaseTest.java         # Base test class with common setup
+│   │   │
+│   │   ├── config/                    # Configuration management
+│   │   │   └── ApiConfig.java        # API configuration management
+│   │   │
+│   │   ├── context/                   # Context/state management
+│   │   │   ├── AuthContext.java      # Authentication context for tokens
+│   │   │   └── ResponseContext.java  # Response context for sharing data
+│   │   │
+│   │   ├── pojo/                      # Plain Old Java Objects (models)
+│   │   │   ├── AuthResponse.java     # Authentication response model
+│   │   │   ├── LoginRequest.java     # Login request model
+│   │   │   └── RefreshTokenRequest.java  # Refresh token request model
+│   │   │
+│   │   ├── reporting/                 # Reporting and logging
+│   │   │   ├── ExtentManager.java    # ExtentReports configuration
+│   │   │   ├── ExtentTestListener.java    # TestNG listener for reporting
+│   │   │   ├── ReportLogger.java     # Custom logger for reports
+│   │   │   └── ReportPostProcessor.java   # Report post-processing
+│   │   │
+│   │   ├── tests/                     # Test classes
+│   │   │   ├── CreateUserPositiveTest.java         # User creation positive scenarios
+│   │   │   ├── CreateUserNegativeTest.java         # User creation negative scenarios
+│   │   │   ├── JwtAuthFlowTest.java                # JWT authentication flow tests
+│   │   │   ├── JwtAuthPositiveTest.java            # JWT positive scenarios
+│   │   │   ├── JwtAuthNegativeTest.java            # JWT negative scenarios
+│   │   │   ├── JwtRefreshTokenTest.java            # JWT refresh token tests
+│   │   │   ├── ProductListingPositiveTest.java     # Product listing tests
+│   │   │   ├── ProductCategoryFilteringTest.java   # Product filtering tests
+│   │   │   └── ProductDataValidationTest.java      # Product validation tests
+│   │   │
+│   │   └── utils/                     # Utility classes
+│   │       ├── AssertUtils.java      # Custom assertion utilities
+│   │       ├── JwtTestData.java      # Test data for JWT operations
+│   │       └── TestData.java         # Test data for user operations
+│   │
+│   └── resources/                     # Test resources
+│       ├── config.properties         # Configuration properties
+│       └── logback.xml              # Logging configuration
+│
+├── pom.xml                           # Maven dependencies and build configuration
+├── testng.xml                        # TestNG suite configuration
+├── README.md                         # Project documentation
+└── AGENTS.md                         # Agents documentation
 ```
+
+## 📂 Framework Components
+
+### API Layer (`api/`)
+- **AuthApi.java**: Handles PetStore authentication endpoints
+- **JwtAuthApi.java**: Manages JWT authentication for DummyJSON API
+- **ProductApi.java**: Product-related API operations (listing, filtering)
+- **UserApi.java**: User information and profile endpoints
+
+### Base Layer (`base/`)
+- **BaseTest.java**: Common test setup, configuration, and teardown logic
+
+### Configuration (`config/`)
+- **ApiConfig.java**: Centralized API configuration with support for multiple APIs
+
+### Context Management (`context/`)
+- **AuthContext.java**: Manages authentication tokens and cookies across tests
+- **ResponseContext.java**: Shares response data between test methods
+
+### POJOs (`pojo/`)
+- **AuthResponse.java**: Models authentication response with tokens
+- **LoginRequest.java**: Login request payload
+- **RefreshTokenRequest.java**: Token refresh request payload
+
+### Reporting (`reporting/`)
+- **ExtentManager.java**: Configures ExtentReports
+- **ExtentTestListener.java**: TestNG listener for report generation
+- **ReportLogger.java**: Custom logging utility for reports
+- **ReportPostProcessor.java**: Post-processes and enhances reports
+
+### Test Classes (`tests/`)
+
+#### User Management Tests
+- **CreateUserPositiveTest**: Valid user creation scenarios
+- **CreateUserNegativeTest**: Invalid data and error handling
+
+#### JWT Authentication Tests
+- **JwtAuthPositiveTest**: Valid login scenarios
+- **JwtAuthNegativeTest**: Invalid credentials handling
+- **JwtAuthFlowTest**: End-to-end authentication flow
+- **JwtRefreshTokenTest**: Token refresh functionality
+
+#### Product API Tests
+- **ProductListingPositiveTest**: Product listing and retrieval
+- **ProductCategoryFilteringTest**: Category-based filtering
+- **ProductDataValidationTest**: Product data structure validation
+
+### Utilities (`utils/`)
+- **AssertUtils.java**: Custom assertion methods for common validations
+- **JwtTestData.java**: Test data provider for JWT operations
+- **TestData.java**: Test data provider for user operations
 
 ## ⚙️ Installation & Setup
 
@@ -111,7 +185,14 @@ mvn clean test
 ### Run Specific Test Suite
 
 ```bash
+# Run JWT Authentication tests
 mvn test -Dtest=JwtAuthPositiveTest
+
+# Run Product API tests
+mvn test -Dtest=ProductListingPositiveTest
+
+# Run User Management tests
+mvn test -Dtest=CreateUserPositiveTest
 ```
 
 ### Run Using TestNG XML
@@ -135,17 +216,23 @@ Open the HTML report in a browser for detailed test execution results with scree
 
 ## 🧪 Test Coverage
 
-### JWT Authentication Tests
+### JWT Authentication Tests (6 test classes)
 
 - **JwtAuthPositiveTest**: Valid login scenarios with POJO
 - **JwtAuthNegativeTest**: Invalid credentials and error handling
 - **JwtAuthFlowTest**: Complete authentication flow
 - **JwtRefreshTokenTest**: Token refresh functionality
 
-### User Management Tests
+### User Management Tests (2 test classes)
 
 - **CreateUserPositiveTest**: Successful user creation scenarios
 - **CreateUserNegativeTest**: Validation and error scenarios
+
+### Product API Tests (3 test classes)
+
+- **ProductListingPositiveTest**: Product retrieval and listing
+- **ProductCategoryFilteringTest**: Category-based product filtering
+- **ProductDataValidationTest**: Product data structure and field validation
 
 ## 🔑 Key Concepts
 
@@ -173,24 +260,44 @@ AuthContext.setRefreshToken(auth.getRefreshToken());
 AuthContext.setCookies(response.getCookies());
 ```
 
-### 3. POJO-Based Requests
+### 3. Response Context
+
+Share response data between test methods:
+
+```java
+ResponseContext.setResponse(response);
+Response savedResponse = ResponseContext.getResponse();
+```
+
+### 4. POJO-Based Requests
 
 Type-safe API requests using POJOs:
 
 ```java
 LoginRequest loginRequest = JwtTestData.validLoginRequest();
-Response response = JwtAuthEndpoint.login(loginRequest);
+Response response = JwtAuthApi.login(loginRequest);
 AuthResponse auth = response.as(AuthResponse.class);
 ```
 
-### 4. Reporting
+### 5. Custom Assertions
 
-Enhanced logging in reports:
+Reusable assertion utilities:
+
+```java
+AssertUtils.assertStatusCode(response, 200);
+AssertUtils.assertResponseTime(response, 5000);
+AssertUtils.assertJsonPath(response, "$.username", "testuser");
+```
+
+### 6. Enhanced Reporting
+
+Comprehensive logging in reports:
 
 ```java
 ReportLogger.info("Starting login test");
 ReportLogger.pass("Login successful");
 ReportLogger.fail("Login failed");
+ReportLogger.warning("Token expiring soon");
 ```
 
 ## 🔄 CI/CD Integration
@@ -202,32 +309,69 @@ The project includes GitHub Actions workflow (`.github/workflows/api-tests.yml`)
 - Caches Maven dependencies
 - Runs all tests
 - Uploads ExtentReports as artifacts
+- Provides test execution status badges
 
 ## 🎯 Best Practices Implemented
 
-1. **Page Object Model Pattern**: Separation of endpoints and test logic
-2. **Data-Driven Testing**: Reusable test data in utility classes
-3. **Centralized Configuration**: Single source for API configurations
-4. **Context Management**: Shared authentication state across tests
-5. **Comprehensive Logging**: Detailed logs for debugging
-6. **Assertions**: Clear and meaningful assertions
-7. **Test Independence**: Tests can run independently
+1. **Layered Architecture**: Clear separation between API, test, and utility layers
+2. **Page Object Model Pattern**: Separation of endpoints and test logic
+3. **Data-Driven Testing**: Reusable test data in utility classes
+4. **Centralized Configuration**: Single source for API configurations
+5. **Context Management**: Shared authentication and response state across tests
+6. **Comprehensive Logging**: Detailed logs for debugging
+7. **Custom Assertions**: Reusable assertion methods for common validations
+8. **Test Independence**: Tests can run independently without dependencies
+9. **SOLID Principles**: Single Responsibility, Open/Closed principles
+10. **DRY Principle**: Don't Repeat Yourself - reusable components
 
-## 📝 Sample Test
+## 📝 Sample Test Examples
+
+### JWT Authentication Test
 
 ```java
 @Test(priority = 1)
 public void loginWithPojo() {
     ReportLogger.info("Starting login using POJO-based request");
     
-Response response = JwtAuthApi.login(JwtTestData.validLoginRequest());
+    Response response = JwtAuthApi.login(JwtTestData.validLoginRequest());
     
-    Assert.assertEquals(response.getStatusCode(), 200);
+    AssertUtils.assertStatusCode(response, 200);
     
     AuthResponse auth = response.as(AuthResponse.class);
     AuthContext.setAccessToken(auth.getAccessToken());
     
     ReportLogger.pass("Login successful and tokens captured");
+}
+```
+
+### Product Filtering Test
+
+```java
+@Test(priority = 1)
+public void filterProductsByCategory() {
+    ReportLogger.info("Testing product category filtering");
+    
+    Response response = ProductApi.getProductsByCategory("smartphones");
+    
+    AssertUtils.assertStatusCode(response, 200);
+    AssertUtils.assertJsonPath(response, "$.products[0].category", "smartphones");
+    
+    ReportLogger.pass("Product filtering by category successful");
+}
+```
+
+### Custom Assertion Example
+
+```java
+@Test
+public void validateProductData() {
+    Response response = ProductApi.getProduct(1);
+    
+    // Using custom assertion utilities
+    AssertUtils.assertStatusCode(response, 200);
+    AssertUtils.assertResponseTime(response, 3000);
+    AssertUtils.assertJsonPath(response, "$.id", 1);
+    AssertUtils.assertNotNull(response, "$.title");
 }
 ```
 
@@ -247,7 +391,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 👤 Author
 
-**Your Name**
+**Nikhil Hadke**
 - GitHub: [@NikhilHDK18](https://github.com/NikhilHDK18)
 - LinkedIn: [Nikhil Hadke](https://linkedin.com/in/nikhilhadke777)
 
@@ -265,6 +409,14 @@ If you encounter any issues or have questions, please:
 - Open an issue on GitHub
 - Check existing documentation
 - Review the test examples in the project
+
+## 📈 Project Stats
+
+- **Total Test Classes**: 9
+- **API Endpoints Covered**: 15+
+- **Test Scenarios**: 30+
+- **Code Coverage**: Comprehensive API layer coverage
+- **Reporting**: ExtentReports with detailed logs
 
 ---
 
