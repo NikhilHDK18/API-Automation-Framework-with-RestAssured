@@ -81,8 +81,8 @@ simple-api-automation-restassured/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/simple-api-automation-restassured.git
-cd simple-api-automation-restassured
+git clone https://github.com/NikhilHDK18/API-Automation-Framework-with-RestAssured.git
+cd API-Automation-Framework-with-RestAssured
 ```
 
 ### 2. Install Dependencies
@@ -248,8 +248,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 👤 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
+- GitHub: [@NikhilHDK18](https://github.com/NikhilHDK18)
+- LinkedIn: [Nikhil Hadke](https://linkedin.com/in/nikhilhadke777)
 
 ## 🙏 Acknowledgments
 
