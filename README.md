@@ -2,7 +2,7 @@
 
 A comprehensive API testing framework built with **RestAssured**, **TestNG**, and **Maven** for automated testing of REST APIs. This framework demonstrates best practices in API test automation with support for JWT authentication, extensive reporting, and CI/CD integration.
 
-![API Automation CI](https://github.com/yourusername/simple-api-automation-restassured/workflows/API%20Automation%20CI/badge.svg)
+![API Automation CI](https://github.com/NikhilHDK18/API-Automation-Framework-with-RestAssured/workflows/API%20Automation%20CI/badge.svg)
 
 ## 🚀 Features
 
