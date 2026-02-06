@@ -12,6 +12,8 @@ import utils.AssertUtils;
 import java.util.List;
 import java.util.Map;
 
+
+@Test(groups = {"Product Listing"})
 public class ProductSecurityTest extends BaseTest {
 
     @BeforeMethod

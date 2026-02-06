@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
+@Test(groups = {"Product Listing"})
 public class ProductPerformanceTest extends BaseTest {
 
     @BeforeMethod

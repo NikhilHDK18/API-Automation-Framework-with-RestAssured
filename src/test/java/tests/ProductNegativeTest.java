@@ -9,6 +9,8 @@ import org.testng.annotations.Test;
 import reporting.ReportLogger;
 import utils.AssertUtils;
 
+
+@Test(groups = {"Product Listing"})
 public class ProductNegativeTest extends BaseTest {
 
     @BeforeMethod

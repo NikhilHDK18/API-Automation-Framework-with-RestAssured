@@ -11,6 +11,7 @@ import reporting.ReportLogger;
 import java.util.List;
 import java.util.Map;
 
+@Test(groups = {"Product Listing"})
 public class ProductReviewRatingTest extends BaseTest {
 
     @BeforeMethod
