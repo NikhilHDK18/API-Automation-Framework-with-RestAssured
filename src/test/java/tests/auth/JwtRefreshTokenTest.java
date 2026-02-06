@@ -1,4 +1,4 @@
-package tests;
+package tests.auth;
 
 import base.BaseTest;
 import context.AuthContext;

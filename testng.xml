@@ -12,30 +12,30 @@
 
 <test name="JWT Tests">
     <classes>
-        <class name="tests.JwtAuthFlowTest"/>
-        <class name="tests.JwtAuthPositiveTest"/>
-        <class name="tests.JwtAuthNegativeTest"/>
-        <class name="tests.JwtRefreshTokenTest"/>
+        <class name="tests.auth.JwtAuthFlowTest"/>
+        <class name="tests.auth.JwtAuthPositiveTest"/>
+        <class name="tests.auth.JwtAuthNegativeTest"/>
+        <class name="tests.auth.JwtRefreshTokenTest"/>
     </classes>
 </test>
 
 <test name="User Tests">
     <classes>
-        <class name="tests.CreateUserPositiveTest"/>
-        <class name="tests.CreateUserNegativeTest"/>
+        <class name="tests.user.CreateUserPositiveTest"/>
+        <class name="tests.user.CreateUserNegativeTest"/>
     </classes>
 </test>
     <test name="Product Listing">
         <classes>
-            <class name="tests.ProductListingPositiveTest"/>
-            <class name="tests.ProductDataValidationTest"/>
-            <class name="tests.ProductCategoryFilteringTest"/>
-            <class name="tests.ProductSortingTest"/>
-            <class name="tests.ProductSecurityTest"/>
-            <class name="tests.ProductReviewRatingTest"/>
-            <class name="tests.ProductPerformanceTest"/>
-            <class name="tests.ProductNegativeTest"/>
-            <class name="tests.ProductBusinessRuleTest"/>
+            <class name="tests.product.ProductListingPositiveTest"/>
+            <class name="tests.product.ProductDataValidationTest"/>
+            <class name="tests.product.ProductCategoryFilteringTest"/>
+            <class name="tests.product.ProductSortingTest"/>
+            <class name="tests.product.ProductSecurityTest"/>
+            <class name="tests.product.ProductReviewRatingTest"/>
+            <class name="tests.performance.ProductPerformanceTest"/>
+            <class name="tests.product.ProductNegativeTest"/>
+            <class name="tests.product.ProductBusinessRuleTest"/>
         </classes>
     </test>
 

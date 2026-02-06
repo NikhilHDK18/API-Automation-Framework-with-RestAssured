@@ -1,4 +1,4 @@
-package tests;
+package tests.product;
 
 import api.ProductApi;
 import base.BaseTest;

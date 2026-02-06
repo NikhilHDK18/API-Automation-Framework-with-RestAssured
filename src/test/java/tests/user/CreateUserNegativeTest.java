@@ -1,4 +1,4 @@
-package tests;
+package tests.user;
 
 import base.BaseTest;
 import api.UserApi;
