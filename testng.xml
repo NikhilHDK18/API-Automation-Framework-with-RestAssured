@@ -30,6 +30,12 @@
             <class name="tests.ProductListingPositiveTest"/>
             <class name="tests.ProductDataValidationTest"/>
             <class name="tests.ProductCategoryFilteringTest"/>
+            <class name="tests.ProductSortingTest"/>
+            <class name="tests.ProductSecurityTest"/>
+            <class name="tests.ProductReviewRatingTest"/>
+            <class name="tests.ProductPerformanceTest"/>
+            <class name="tests.ProductNegativeTest"/>
+            <class name="tests.ProductBusinessRuleTest"/>
         </classes>
     </test>
 
