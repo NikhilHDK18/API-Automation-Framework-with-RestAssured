@@ -9,7 +9,7 @@ import reporting.ReportLogger;
 import utils.AssertUtils;
 import utils.TestData;
 
-import java.util.Map;
+import pojo.UserPayload;
 
 @Test(groups = {"Create User"})
 public class CreateUserPositiveTest extends BaseTest {
@@ -25,7 +25,7 @@ public class CreateUserPositiveTest extends BaseTest {
         ReportLogger.info("PetStore API selected");
         ReportLogger.info("Preparing Create User payload");
 
-        Map<String, Object> payload = TestData.createUserPayload();
+        UserPayload payload = TestData.createUserPayload();
         ReportLogger.info("Payload: " + payload);
 
         ReportLogger.info("Calling Create User API");

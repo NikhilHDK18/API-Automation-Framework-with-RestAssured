@@ -10,8 +10,7 @@ import reporting.ReportLogger;
 import utils.AssertUtils;
 import utils.TestData;
 
-import java.util.HashMap;
-import java.util.Map;
+import pojo.UserPayload;
 
 @Listeners(reporting.ExtentTestListener.class)
 @Test(groups = {"Create User"})
@@ -31,8 +30,9 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Creating user without username");
 
-        Map<String, Object> payload = TestData.createUserPayload();
-        payload.remove("username");
+        UserPayload payload = TestData.createUserPayload(
+                builder -> builder.username(null)
+        );
 
         Response response = UserApi.createUser(payload);
 
@@ -51,8 +51,9 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Creating user without email");
 
-        Map<String, Object> payload = TestData.createUserPayload();
-        payload.remove("email");
+        UserPayload payload = TestData.createUserPayload(
+                builder -> builder.email(null)
+        );
 
         Response response = UserApi.createUser(payload);
 
@@ -74,8 +75,9 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Creating user with invalid email format");
 
-        Map<String, Object> payload = TestData.createUserPayload();
-        payload.put("email", "invalid-email");
+        UserPayload payload = TestData.createUserPayload(
+                builder -> builder.email("invalid-email")
+        );
 
         Response response = UserApi.createUser(payload);
 
@@ -93,8 +95,9 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Creating user with invalid phone");
 
-        Map<String, Object> payload = TestData.createUserPayload();
-        payload.put("phone", "abcd1234");
+        UserPayload payload = TestData.createUserPayload(
+                builder -> builder.phone("abcd1234")
+        );
 
         Response response = UserApi.createUser(payload);
 
@@ -118,13 +121,14 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Creating user with very long username");
 
-        Map<String, Object> payload = TestData.createUserPayload();
         StringBuilder longUsername = new StringBuilder();
         for (int i = 0; i < 300; i++) {
             longUsername.append("a");
         }
 
-        payload.put("username", longUsername.toString());
+        UserPayload payload = TestData.createUserPayload(
+                builder -> builder.username(longUsername.toString())
+        );
 
 
         Response response = UserApi.createUser(payload);
@@ -147,7 +151,7 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Creating duplicate user");
 
-        Map<String, Object> payload = TestData.createUserPayload();
+        UserPayload payload = TestData.createUserPayload();
 
         Response firstResponse = UserApi.createUser(payload);
         Response secondResponse = UserApi.createUser(payload);
@@ -170,7 +174,7 @@ public class CreateUserNegativeTest extends BaseTest {
 
         ReportLogger.info("Creating user with empty payload");
 
-        Map<String, Object> payload = new HashMap<>();
+        UserPayload payload = UserPayload.builder().build();
 
         Response response = UserApi.createUser(payload);
 
