@@ -3,14 +3,12 @@ package api;
 import context.ResponseContext;
 import io.restassured.response.Response;
 
-import java.util.Map;
-
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.patch;
 
 public class UserApi {
 
-    public static Response createUser(Map<String, Object> payload){
+    public static Response createUser(Object payload){
         Response response = given()
                 .header("Content-Type", "application/json")
                 .body(payload)
@@ -40,7 +38,7 @@ public class UserApi {
         return response;
     }
 
-    public static Response createUserWithoutContentType(Map<String, Object> payload) {
+    public static Response createUserWithoutContentType(Object payload) {
         Response response = given()
                 .body(payload)
                 .when()
